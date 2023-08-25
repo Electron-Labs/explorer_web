@@ -5,11 +5,12 @@ import { useTheme } from '@emotion/react';
 import axios from 'axios';
 import BigNumber from 'bignumber.js';
 
-import { Typography, Badge } from 'components';
 import {
 	StatusMap, CHAIN_EXPLORER_MAP, CHAIN_ICON_MAP, ChainId, TOKEN_CONTRACTS_ICON_MAP,
 } from 'constant';
 import { formatTransactionHash, isHexString } from 'utils';
+import Typography from '../Typography';
+import Badge from '../Badge';
 import {
 	Container,
 	TableHead,
@@ -108,9 +109,9 @@ const TransactionHistory: React.FC = () => {
 	const formatTimestamp = (timestamp: string) => {
 		const dateTime = new Date(timestamp).toUTCString();
 		const timePattern = /(?:[01]?[0-9]|2[0-3]):[0-5]?[0-9]?/;
-		const utcTime = dateTime.match(timePattern)[0];
+		const utcTime = dateTime?.match(timePattern);
 		return {
-			date: dateTime.split(utcTime)[0],
+			date: utcTime ? dateTime.split(utcTime[0])[0] : '',
 			time: utcTime,
 		};
 	};

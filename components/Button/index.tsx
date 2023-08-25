@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
 		<StyledButton
 			ref={ref}
 			onClick={onClick}
-			icon={iconURL && <Image src={iconURL} alt={altText} width={36} height={36} />}
+			icon={iconURL && <Image src={iconURL} alt={altText || ''} width={36} height={36} />}
 			disabled={disable}
 			style={{
 				background: disable ? theme.button.secondary : color,

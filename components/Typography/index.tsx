@@ -27,7 +27,7 @@ const fontWeightMap = {
 const Typography: React.FC<TypographyProps> = (props: TypographyProps) => {
 	const theme = useTheme();
 	const {
-		type, shade, colorType, children, style, onClick,
+		type, shade, colorType, children, style,
 	} = props;
 	const Component = type ? variantsMap[type] : Default;
 	const fontWeight = shade ? fontWeightMap[shade] : fontWeightMap.light;
@@ -42,7 +42,6 @@ const Typography: React.FC<TypographyProps> = (props: TypographyProps) => {
 			color={color}
 			fontWeight={fontWeight}
 			style={{ ...style }}
-			onClick={onClick}
 		>
 			{children}
 		</Component>
