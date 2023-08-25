@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@emotion/react';
+import Head from 'next/head';
 
 import { Header } from 'components';
 import { THEME_TYPES } from 'constant';
@@ -22,13 +23,20 @@ export default function App({ Component, pageProps }: AppProps) {
 	};
 
 	return (
-		<ThemeProvider theme={Themes[currentTheme]}>
-			<Wrapper>
-				<Header toggleTheme={handleToggleTheme} currentTheme={currentTheme} />
-				<BackgroundContainer>
-					<Component {...pageProps} />
-				</BackgroundContainer>
-			</Wrapper>
-		</ThemeProvider>
+		<>
+			<Head>
+				<title>Electron Explorer</title>
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<link rel="icon" href="/favicon.ico" />
+			</Head>
+			<ThemeProvider theme={Themes[currentTheme]}>
+				<Wrapper>
+					<Header toggleTheme={handleToggleTheme} currentTheme={currentTheme} />
+					<BackgroundContainer>
+						<Component {...pageProps} />
+					</BackgroundContainer>
+				</Wrapper>
+			</ThemeProvider>
+		</>
 	);
 }

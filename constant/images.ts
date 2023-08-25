@@ -1,6 +1,11 @@
 const Icons = {
 	SUN: { url: '/icons/sun.svg', alt: 'Dark' },
 	MOON: { url: '/icons/moon.svg', alt: 'Light' },
+	ETH: { url: '/icons/eth.svg', alt: 'Ethereum' },
+	NEAR: { url: '/icons/near.svg', alt: 'Near' },
+	USDC: { url: '/icons/usdc.svg', alt: 'USDC' },
+	zkUSDC: { url: '/icons/zkusdc.svg', alt: 'zkUSDC' },
+	rUSDC: { url: '/icons/rusdc.svg', alt: 'rUSDC' },
 };
 
 const Images = {
