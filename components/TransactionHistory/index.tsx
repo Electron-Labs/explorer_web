@@ -52,7 +52,7 @@ const TableHeader = [{
 }, {
 	label: 'Destination Txn',
 	key: 'destinationTx',
-	style: { width: '120px' },
+	style: { width: '140px' },
 }];
 
 const PAGE_SIZE = 10;
@@ -195,7 +195,6 @@ const TransactionHistory: React.FC = () => {
 												style={{
 													display: 'flex',
 													alignItems: 'center',
-													justifyContent: 'center',
 													gridGap: '8px',
 												}}
 											>
@@ -256,7 +255,6 @@ const TransactionHistory: React.FC = () => {
 												style={{
 													display: 'flex',
 													alignItems: 'center',
-													justifyContent: 'center',
 													gridGap: '8px',
 												}}
 											>
