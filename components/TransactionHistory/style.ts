@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-	width: 1200px;
+	width: 1400px;
 	background: ${(props) => props.theme.background.card};
 	border-radius: 28px;
 	padding: 36px 24px;

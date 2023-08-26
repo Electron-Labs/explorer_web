@@ -11,9 +11,9 @@ const colorMap = {
 };
 
 const Badge: React.FC<BadgeProps> = (props: BadgeProps) => {
-	const { label, type } = props;
+	const { label, type, style } = props;
 	return (
-		<Container backgroundColor={colorMap[type]}>
+		<Container backgroundColor={colorMap[type]} style={style}>
 			<Typography type="l6" shade="strong">
 				{label}
 			</Typography>

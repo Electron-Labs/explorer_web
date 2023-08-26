@@ -2,7 +2,7 @@ import { Icons } from './images';
 
 // eslint-disable-next-line no-shadow
 export const enum ChainId {
-	'ETHEREUM' = 'ETHEREUM',
+	'ETHEREUM' = 'ETH',
 	'NEAR' = 'NEAR',
 }
 

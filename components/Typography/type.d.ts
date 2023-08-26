@@ -6,5 +6,4 @@ export interface TypographyProps {
   shade?: 'strong' | 'medium' | 'light'
   colorType?: 'primary' | 'secondary' | 'tertiary' | 'active' | 'error'
   style?: React.CSSProperties
-  onClick?: Function,
 }

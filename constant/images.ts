@@ -6,6 +6,8 @@ const Icons = {
 	USDC: { url: '/icons/usdc.svg', alt: 'USDC' },
 	zkUSDC: { url: '/icons/zkusdc.svg', alt: 'zkUSDC' },
 	rUSDC: { url: '/icons/rusdc.svg', alt: 'rUSDC' },
+	BACK: { url: '/icons/arrow.svg', alt: 'Back' },
+	COPY: { url: '/icons/copy.svg', alt: 'Copy' },
 };
 
 const Images = {

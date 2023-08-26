@@ -4,6 +4,7 @@ import { Spin, Tooltip, Pagination } from 'antd';
 import { useTheme } from '@emotion/react';
 import axios from 'axios';
 import BigNumber from 'bignumber.js';
+import { useRouter } from 'next/router';
 
 import {
 	StatusMap, CHAIN_EXPLORER_MAP, CHAIN_ICON_MAP, ChainId, TOKEN_CONTRACTS_ICON_MAP,
@@ -27,7 +28,7 @@ import { Transaction } from './type';
 const TableHeader = [{
 	label: 'Status',
 	key: 'status',
-	style: { width: '100px' },
+	style: { width: '80px' },
 }, {
 	label: 'Origin Time',
 	key: 'sourceTime',
@@ -35,7 +36,7 @@ const TableHeader = [{
 }, {
 	label: 'Nonce',
 	key: 'nonce',
-	style: { width: '80px' },
+	style: { width: '60px' },
 }, {
 	label: 'From',
 	key: 'senderAddress',
@@ -43,7 +44,7 @@ const TableHeader = [{
 }, {
 	label: 'Source Txn',
 	key: 'sourceTx',
-	style: { width: '100px' },
+	style: { width: '120px' },
 }, {
 	label: 'To',
 	key: 'receiverAddress',
@@ -58,7 +59,8 @@ const PAGE_SIZE = 10;
 
 const TransactionHistory: React.FC = () => {
 	const theme = useTheme();
-	const [currentPage, setCurrentPage] = useState<number>(0);
+	const router = useRouter();
+	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [totalTransactionItems, setTotalTransactionItems] = useState<number>(0);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [transactionList, setTransactionList] = useState<Array<Transaction>>([]);
@@ -77,7 +79,7 @@ const TransactionHistory: React.FC = () => {
 	const fetchData = useCallback(async () => {
 		try {
 			const response = await axios.get(
-				`${process.env.NEXT_PUBLIC_SERVER_URL}/list_transactions/?per_page=${PAGE_SIZE}&page_no=${currentPage}`,
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/list_transactions/?per_page=${PAGE_SIZE}&page_no=${currentPage - 1}`,
 			);
 			const list = response.data.transactions.map((item: any) => {
 				const sourceChain = getChain(item.senderAddress);
@@ -123,7 +125,7 @@ const TransactionHistory: React.FC = () => {
 	return (
 		<>
 			<Typography shade="strong" type="l2" style={{ marginBottom: '48px' }}>
-				Electron Overview
+				Transaction Explorer
 			</Typography>
 			<Container>
 				<div style={{ paddingLeft: '24px', marginBottom: '16px' }}>
@@ -155,7 +157,11 @@ const TransactionHistory: React.FC = () => {
 						<tbody>
 							{!isLoading && (
 								transactionList.map((item) => (
-									<tr key={item.sourceTx} style={{ cursor: 'pointer' }}>
+									<tr
+										key={item.sourceTx}
+										style={{ cursor: 'pointer' }}
+										onClick={() => router.push(`/?nonce=${item.nonce}&source=${item.sourceChain.toLowerCase()}`)}
+									>
 										<TableData>
 											<Badge label={item.status} type={StatusMap[item.status.toLowerCase()]} />
 										</TableData>
@@ -286,6 +292,7 @@ const TransactionHistory: React.FC = () => {
 													<Typography
 														type="l5"
 														shade="medium"
+														style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
 													>
 														{item.amount}
 														{' '}

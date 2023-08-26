@@ -5,4 +5,4 @@ export const formatTransactionHash = (txHash: string = '') => {
 	return '';
 };
 
-export const isHexString = (input: string) => input.match(/^[0x]+[A-Fa-f0-9]+$/);
+export const isHexString = (input: string) => input?.match(/^[0x]+[A-Fa-f0-9]+$/);

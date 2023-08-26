@@ -12,4 +12,5 @@ export interface Transaction {
 	tokenAddressSource: string,
 	tokenIcon: { url: string, alt: string}
 	tokenName: string,
+	destinationTime: string,
 }
