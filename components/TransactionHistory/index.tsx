@@ -61,7 +61,7 @@ const TransactionHistory: React.FC = () => {
 	const theme = useTheme();
 	const router = useRouter();
 	const [currentPage, setCurrentPage] = useState<number>(1);
-	const [totalTransactionItems, setTotalTransactionItems] = useState<number>(0);
+	const [totalTransactionItems, setTotalTransactionItems] = useState<number>(1);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [transactionList, setTransactionList] = useState<Array<Transaction>>([]);
 
@@ -343,17 +343,15 @@ const TransactionHistory: React.FC = () => {
 						</tbody>
 					</StyledTable>
 				</TableContainer>
-				{ !isLoading && (
-					<PaginationWrapper>
-						<Pagination
-							defaultCurrent={1}
-							current={currentPage}
-							total={totalTransactionItems}
-							pageSize={PAGE_SIZE}
-							onChange={handlePagination}
-						/>
-					</PaginationWrapper>
-				)}
+				<PaginationWrapper>
+					<Pagination
+						defaultCurrent={1}
+						current={currentPage}
+						total={totalTransactionItems}
+						pageSize={PAGE_SIZE}
+						onChange={handlePagination}
+					/>
+				</PaginationWrapper>
 			</Container>
 		</>
 	);

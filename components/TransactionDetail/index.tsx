@@ -13,6 +13,7 @@ import {
 } from 'constant';
 import Typography from '../Typography';
 import Badge from '../Badge';
+import SvgImage from '../SvgImage';
 import {
 	Container, Header, DetailWrapper, AssetWrapper, Grid, LoaderWrapper,
 } from './style';
@@ -40,7 +41,6 @@ const TransactionDetail: React.FC = () => {
 			try {
 				const { query } = router;
 				const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/transaction/?nonce=${query.nonce}&source=${query.source}`);
-				console.log(response.data);
 				const sourceChain = getChain(response.data.senderAddress);
 				const destinationChain = getChain(response.data.receiverAddress);
 				const tokenInfo = TOKEN_CONTRACTS_ICON_MAP[response.data.tokenAddressSource.toLowerCase()];
@@ -120,11 +120,8 @@ const TransactionDetail: React.FC = () => {
 	return (
 		<Container>
 			<Header>
-				<Image
+				<SvgImage
 					src={Icons.BACK.url}
-					alt={Icons.BACK.alt}
-					height={18}
-					width={18}
 					onClick={handleBack}
 					style={{ cursor: 'pointer' }}
 				/>
@@ -209,7 +206,7 @@ const TransactionDetail: React.FC = () => {
 										height={24}
 										width={24}
 									/>
-									<Typography>
+									<Typography shade="medium">
 										{transactionDetail.sourceChain}
 									</Typography>
 								</div>
@@ -227,11 +224,8 @@ const TransactionDetail: React.FC = () => {
 								>
 									{transactionDetail.senderAddress}
 									<Tooltip title="Copy" placement="bottom">
-										<Image
+										<SvgImage
 											src={Icons.COPY.url}
-											alt={Icons.COPY.alt}
-											height={18}
-											width={18}
 											style={{ cursor: 'pointer' }}
 											onClick={() => handleCopy(transactionDetail.senderAddress)}
 										/>
@@ -278,11 +272,8 @@ const TransactionDetail: React.FC = () => {
 										{transactionDetail.sourceTx}
 									</a>
 									<Tooltip title="Copy" placement="bottom">
-										<Image
+										<SvgImage
 											src={Icons.COPY.url}
-											alt={Icons.COPY.alt}
-											height={18}
-											width={18}
 											style={{ cursor: 'pointer' }}
 											onClick={() => handleCopy(transactionDetail.sourceTx)}
 										/>
@@ -332,7 +323,7 @@ const TransactionDetail: React.FC = () => {
 										height={24}
 										width={24}
 									/>
-									<Typography>
+									<Typography shade="medium">
 										{transactionDetail.destinationChain}
 									</Typography>
 								</div>
@@ -350,11 +341,8 @@ const TransactionDetail: React.FC = () => {
 								>
 									{transactionDetail.receiverAddress}
 									<Tooltip title="Copy" placement="bottom">
-										<Image
+										<SvgImage
 											src={Icons.COPY.url}
-											alt={Icons.COPY.alt}
-											height={18}
-											width={18}
 											style={{ cursor: 'pointer' }}
 											onClick={() => handleCopy(transactionDetail.receiverAddress)}
 										/>
@@ -401,11 +389,8 @@ const TransactionDetail: React.FC = () => {
 										{transactionDetail.destinationTx}
 									</a>
 									<Tooltip title="Copy" placement="bottom">
-										<Image
+										<SvgImage
 											src={Icons.COPY.url}
-											alt={Icons.COPY.alt}
-											height={18}
-											width={18}
 											style={{ cursor: 'pointer' }}
 											onClick={() => handleCopy(transactionDetail.destinationTx)}
 										/>
