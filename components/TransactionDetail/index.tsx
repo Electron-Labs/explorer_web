@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -51,6 +52,10 @@ const TransactionDetail: React.FC = () => {
 					tokenIcon: tokenInfo?.icon,
 					tokenName: tokenInfo?.name,
 					amount: (+formatAmount(response.data.amount)).toLocaleString(),
+					txSourceUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/${sourceChain === ChainId.NEAR ? 'transactions' : 'tx'}/${response.data.sourceTx}`,
+					txDestinationUrl: `${CHAIN_EXPLORER_MAP[destinationChain]}/${destinationChain === ChainId.NEAR ? 'transactions' : 'tx'}/${response.data.destinationTx}`,
+					senderExplorerUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/${destinationChain === ChainId.NEAR ? 'accounts' : 'address'}/${response.data.senderAddress}`,
+					receiverExplorerUrl: `${CHAIN_EXPLORER_MAP[destinationChain]}/${destinationChain === ChainId.NEAR ? 'accounts' : 'address'}/${response.data.receiverAddress}`,
 				});
 				setIsLoading(false);
 			} catch {
@@ -222,7 +227,9 @@ const TransactionDetail: React.FC = () => {
 										color: theme.text.active,
 									}}
 								>
-									{transactionDetail.senderAddress}
+									<a href={transactionDetail.senderExplorerUrl} target="_blank">
+										{transactionDetail.senderAddress}
+									</a>
 									<Tooltip title="Copy" placement="bottom">
 										<SvgImage
 											src={Icons.COPY.url}
@@ -268,7 +275,7 @@ const TransactionDetail: React.FC = () => {
 										color: theme.text.active,
 									}}
 								>
-									<a href={`${CHAIN_EXPLORER_MAP[transactionDetail.sourceChain]}/${transactionDetail.sourceTx}`} target="_blank">
+									<a href={transactionDetail.txSourceUrl} target="_blank">
 										{transactionDetail.sourceTx}
 									</a>
 									<Tooltip title="Copy" placement="bottom">
@@ -339,7 +346,9 @@ const TransactionDetail: React.FC = () => {
 										color: theme.text.active,
 									}}
 								>
-									{transactionDetail.receiverAddress}
+									<a href={transactionDetail.receiverExplorerUrl} target="_blank">
+										{transactionDetail.receiverAddress}
+									</a>
 									<Tooltip title="Copy" placement="bottom">
 										<SvgImage
 											src={Icons.COPY.url}
@@ -385,7 +394,7 @@ const TransactionDetail: React.FC = () => {
 										color: theme.text.active,
 									}}
 								>
-									<a href={`${CHAIN_EXPLORER_MAP[transactionDetail.destinationChain]}/${transactionDetail.destinationTx}`} target="_blank">
+									<a href={transactionDetail.txDestinationUrl} target="_blank">
 										{transactionDetail.destinationTx}
 									</a>
 									<Tooltip title="Copy" placement="bottom">

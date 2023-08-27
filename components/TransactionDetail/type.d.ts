@@ -13,4 +13,8 @@ export interface Transaction {
 	tokenIcon: { url: string, alt: string}
 	tokenName: string,
 	destinationTime: string,
+	txSourceUrl: string,
+	txDestinationUrl: string,
+	senderExplorerUrl: string,
+	receiverExplorerUrl: string,
 }

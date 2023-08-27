@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { Spin, Tooltip, Pagination } from 'antd';
@@ -92,6 +93,10 @@ const TransactionHistory: React.FC = () => {
 					tokenIcon: tokenInfo?.icon,
 					tokenName: tokenInfo?.name,
 					amount: (+formatAmount(item.amount)).toLocaleString(),
+					txSourceUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/${sourceChain === ChainId.NEAR ? 'transactions' : 'tx'}/${item.sourceTx}`,
+					txDestinationUrl: `${CHAIN_EXPLORER_MAP[destinationChain]}/${destinationChain === ChainId.NEAR ? 'transactions' : 'tx'}/${item.destinationTx}`,
+					senderExplorerUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/${destinationChain === ChainId.NEAR ? 'accounts' : 'address'}/${item.senderAddress}`,
+					receiverExplorerUrl: `${CHAIN_EXPLORER_MAP[destinationChain]}/${destinationChain === ChainId.NEAR ? 'accounts' : 'address'}/${item.receiverAddress}`,
 				};
 			});
 			setTransactionList(list);
@@ -120,6 +125,11 @@ const TransactionHistory: React.FC = () => {
 
 	const handlePagination = (page: number) => {
 		setCurrentPage(page);
+	};
+
+	const navigateUrl = (url: string) => (event: React.SyntheticEvent) => {
+		event?.stopPropagation();
+		window.open(url, '_blank');
 	};
 
 	return (
@@ -160,7 +170,10 @@ const TransactionHistory: React.FC = () => {
 									<tr
 										key={item.sourceTx}
 										style={{ cursor: 'pointer' }}
-										onClick={() => router.push(`/?nonce=${item.nonce}&source=${item.sourceChain.toLowerCase()}`)}
+										onClick={(event: React.SyntheticEvent) => {
+											event.stopPropagation();
+											router.push(`/?nonce=${item.nonce}&source=${item.sourceChain.toLowerCase()}`);
+										}}
 									>
 										<TableData>
 											<Badge label={item.status} type={StatusMap[item.status.toLowerCase()]} />
@@ -204,15 +217,17 @@ const TransactionHistory: React.FC = () => {
 													height={24}
 													width={24}
 												/>
-												<Typography
-													type="l5"
-													shade="strong"
-													style={{ color: theme.text.active }}
-												>
-													<Tooltip title={item.senderAddress} placement="bottom">
-														{formatTransactionHash(item.senderAddress)}
-													</Tooltip>
-												</Typography>
+												<div onClick={navigateUrl(item.senderExplorerUrl)} tabIndex={0} role="button">
+													<Typography
+														type="l5"
+														shade="strong"
+														style={{ color: theme.text.active }}
+													>
+														<Tooltip title={item.senderAddress} placement="bottom">
+															{formatTransactionHash(item.senderAddress)}
+														</Tooltip>
+													</Typography>
+												</div>
 											</div>
 										</TableData>
 										<TableData>
@@ -237,7 +252,7 @@ const TransactionHistory: React.FC = () => {
 														{item.tokenName}
 													</Typography>
 													<Tooltip title={item.sourceTx} placement="bottom">
-														<a href={`${CHAIN_EXPLORER_MAP[item.sourceChain]}/${item.sourceTx}`} target="_blank">
+														<div onClick={navigateUrl(item.txSourceUrl)} tabIndex={0} role="button">
 															<Typography
 																type="l5"
 																shade="medium"
@@ -245,7 +260,7 @@ const TransactionHistory: React.FC = () => {
 															>
 																{formatTransactionHash(item.sourceTx)}
 															</Typography>
-														</a>
+														</div>
 													</Tooltip>
 												</div>
 											</AssetWrapper>
@@ -264,15 +279,17 @@ const TransactionHistory: React.FC = () => {
 													height={24}
 													width={24}
 												/>
-												<Typography
-													type="l5"
-													shade="strong"
-													style={{ color: theme.text.active }}
-												>
-													<Tooltip title={item.receiverAddress} placement="bottom">
-														{formatTransactionHash(item.receiverAddress)}
-													</Tooltip>
-												</Typography>
+												<div onClick={navigateUrl(item.receiverExplorerUrl)} tabIndex={0} role="button">
+													<Typography
+														type="l5"
+														shade="strong"
+														style={{ color: theme.text.active }}
+													>
+														<Tooltip title={item.receiverAddress} placement="bottom">
+															{formatTransactionHash(item.receiverAddress)}
+														</Tooltip>
+													</Typography>
+												</div>
 											</div>
 										</TableData>
 										<TableData>
@@ -297,7 +314,7 @@ const TransactionHistory: React.FC = () => {
 														{item.tokenName}
 													</Typography>
 													<Tooltip title={item.destinationTx} placement="bottom">
-														<a href={`${CHAIN_EXPLORER_MAP[item.destinationChain]}/${item.destinationTx}`} target="_blank">
+														<div onClick={navigateUrl(item.txDestinationUrl)} tabIndex={0} role="button">
 															<Typography
 																type="l5"
 																shade="medium"
@@ -305,7 +322,7 @@ const TransactionHistory: React.FC = () => {
 															>
 																{formatTransactionHash(item.destinationTx)}
 															</Typography>
-														</a>
+														</div>
 													</Tooltip>
 												</div>
 											</AssetWrapper>

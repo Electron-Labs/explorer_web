@@ -20,8 +20,8 @@ export const StatusMap: {[key: string]: 'success' | 'warning' | 'error' } = {
 export const CHAIN_EXPLORER_MAP: {
 	[key: string]: string
 } = {
-	[ChainId.NEAR]: process.env.NEXT_PUBLIC_ENV === 'prod' ? 'https://explorer.near.org/transactions' : 'https://explorer.testnet.near.org/transactions',
-	[ChainId.ETHEREUM]: process.env.NEXT_PUBLIC_ENV === 'prod' ? 'https://etherscan.io/tx' : 'https://goerli.etherscan.io/tx',
+	[ChainId.NEAR]: process.env.NEXT_PUBLIC_ENV === 'prod' ? 'https://explorer.near.org' : 'https://explorer.testnet.near.org',
+	[ChainId.ETHEREUM]: process.env.NEXT_PUBLIC_ENV === 'prod' ? 'https://etherscan.io' : 'https://goerli.etherscan.io',
 };
 
 export const CHAIN_ICON_MAP: {

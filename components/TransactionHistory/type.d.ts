@@ -12,4 +12,8 @@ export interface Transaction {
 	tokenAddressSource: string,
 	tokenIcon: { url: string, alt: string}
 	tokenName: string,
+	txSourceUrl: string,
+	txDestinationUrl: string,
+	senderExplorerUrl: string,
+	receiverExplorerUrl: string,
 }
