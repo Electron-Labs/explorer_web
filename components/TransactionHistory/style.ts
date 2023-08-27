@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-	width: 1400px;
 	background: ${(props) => props.theme.background.card};
 	border-radius: 28px;
 	padding: 36px 24px;
@@ -9,13 +8,14 @@ export const Container = styled.div`
 
 export const TableContainer = styled.div`
 	width: 100%;
+	height: 100%;
 	text-align: left;
 	overflow-y: auto;
 	position: relative;
 `;
 
 export const StyledTable = styled.table`
-	width: 100%;
+	width: 1400px;
 `;
 
 export const TableHead = styled.thead`
