@@ -23,6 +23,7 @@ import {
 	LoaderWrapper,
 	AssetWrapper,
 	PaginationWrapper,
+	TableRow,
 } from './style';
 import { Transaction } from './type';
 
@@ -167,9 +168,8 @@ const TransactionHistory: React.FC = () => {
 						<tbody>
 							{!isLoading && (
 								transactionList.map((item) => (
-									<tr
+									<TableRow
 										key={item.sourceTx}
-										style={{ cursor: 'pointer' }}
 										onClick={(event: React.SyntheticEvent) => {
 											event.stopPropagation();
 											router.push(`/?nonce=${item.nonce}&source=${item.sourceChain.toLowerCase()}`);
@@ -327,7 +327,7 @@ const TransactionHistory: React.FC = () => {
 												</div>
 											</AssetWrapper>
 										</TableData>
-									</tr>
+									</TableRow>
 								))
 							)}
 							{isLoading && (

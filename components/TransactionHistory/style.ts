@@ -14,8 +14,16 @@ export const TableContainer = styled.div`
 	position: relative;
 `;
 
+export const TableRow = styled.tr`
+	cursor: pointer;
+	&:hover {
+		background: ${(props) => props.theme.background.base};
+	}
+`;
+
 export const StyledTable = styled.table`
 	width: 1400px;
+	border-spacing: 0px;
 `;
 
 export const TableHead = styled.thead`
