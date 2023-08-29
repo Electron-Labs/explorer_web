@@ -44,21 +44,27 @@ const TransactionDetail: React.FC = () => {
 				const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/transaction/?nonce=${query.nonce}&source=${query.source}`);
 				const sourceChain = getChain(response.data.senderAddress);
 				const destinationChain = getChain(response.data.receiverAddress);
-				const tokenInfo = TOKEN_CONTRACTS_ICON_MAP[response.data.tokenAddressSource.toLowerCase()];
+				const sourceTokenInfo = TOKEN_CONTRACTS_ICON_MAP[
+					response.data.tokenAddressSource.toLowerCase()
+				];
+				const destinationTokenInfo = TOKEN_CONTRACTS_ICON_MAP[
+					response.data.tokenAddressDestination.toLowerCase()
+				];
 				setTransactionDetail({
 					...response.data,
 					sourceChain,
 					destinationChain,
-					tokenIcon: tokenInfo?.icon,
-					tokenName: tokenInfo?.name,
-					amount: (+formatAmount(response.data.amount)).toLocaleString(),
+					sourceTokenInfo,
+					destinationTokenInfo,
+					sourceAmount: (+formatAmount(response.data.sourceAmount)).toLocaleString(),
+					destinationAmount: (+formatAmount(response.data.destinationAmount)).toLocaleString(),
 					txSourceUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/${sourceChain === ChainId.NEAR ? 'transactions' : 'tx'}/${response.data.sourceTx}`,
 					txDestinationUrl: `${CHAIN_EXPLORER_MAP[destinationChain]}/${destinationChain === ChainId.NEAR ? 'transactions' : 'tx'}/${response.data.destinationTx}`,
 					senderExplorerUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/${destinationChain === ChainId.NEAR ? 'address' : 'address'}/${response.data.senderAddress}`,
 					receiverExplorerUrl: `${CHAIN_EXPLORER_MAP[destinationChain]}/${destinationChain === ChainId.NEAR ? 'address' : 'address'}/${response.data.receiverAddress}`,
 				});
 				setIsLoading(false);
-			} catch {
+			} catch (err) {
 				setTransactionDetail(null);
 				setIsLoading(false);
 			}
@@ -243,8 +249,8 @@ const TransactionDetail: React.FC = () => {
 								</Typography>
 								<AssetWrapper>
 									<Image
-										src={transactionDetail.tokenIcon?.url}
-										alt={transactionDetail.tokenIcon?.alt}
+										src={transactionDetail.sourceTokenInfo?.icon?.url}
+										alt={transactionDetail.sourceTokenInfo?.icon?.alt}
 										height={24}
 										width={24}
 									/>
@@ -257,9 +263,9 @@ const TransactionDetail: React.FC = () => {
 											shade="medium"
 											style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
 										>
-											{transactionDetail.amount}
+											{transactionDetail.sourceAmount}
 											{' '}
-											{transactionDetail.tokenName}
+											{transactionDetail.sourceTokenInfo?.name}
 										</Typography>
 									</div>
 								</AssetWrapper>
@@ -362,8 +368,8 @@ const TransactionDetail: React.FC = () => {
 								</Typography>
 								<AssetWrapper>
 									<Image
-										src={transactionDetail.tokenIcon?.url}
-										alt={transactionDetail.tokenIcon?.alt}
+										src={transactionDetail.destinationTokenInfo?.icon?.url}
+										alt={transactionDetail.destinationTokenInfo?.icon?.alt}
 										height={24}
 										width={24}
 									/>
@@ -376,9 +382,9 @@ const TransactionDetail: React.FC = () => {
 											shade="medium"
 											style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
 										>
-											{transactionDetail.amount}
+											{transactionDetail.destinationAmount}
 											{' '}
-											{transactionDetail.tokenName}
+											{transactionDetail.destinationTokenInfo?.name}
 										</Typography>
 									</div>
 								</AssetWrapper>

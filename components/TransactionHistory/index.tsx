@@ -86,14 +86,18 @@ const TransactionHistory: React.FC = () => {
 			const list = response.data.transactions.map((item: any) => {
 				const sourceChain = getChain(item.senderAddress);
 				const destinationChain = getChain(item.receiverAddress);
-				const tokenInfo = TOKEN_CONTRACTS_ICON_MAP[item.tokenAddressSource.toLowerCase()];
+				const sourceTokenInfo = TOKEN_CONTRACTS_ICON_MAP[item.tokenAddressSource.toLowerCase()];
+				const destinationTokenInfo = TOKEN_CONTRACTS_ICON_MAP[
+					item.tokenAddressDestination.toLowerCase()
+				];
 				return {
 					...item,
 					sourceChain,
 					destinationChain,
-					tokenIcon: tokenInfo?.icon,
-					tokenName: tokenInfo?.name,
-					amount: (+formatAmount(item.amount)).toLocaleString(),
+					sourceTokenInfo,
+					destinationTokenInfo,
+					sourceAmount: (+formatAmount(item.sourceAmount)).toLocaleString(),
+					destinationAmount: (+formatAmount(item.destinationAmount)).toLocaleString(),
 					txSourceUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/${sourceChain === ChainId.NEAR ? 'transactions' : 'tx'}/${item.sourceTx}`,
 					txDestinationUrl: `${CHAIN_EXPLORER_MAP[destinationChain]}/${destinationChain === ChainId.NEAR ? 'transactions' : 'tx'}/${item.destinationTx}`,
 					senderExplorerUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/address/${item.senderAddress}`,
@@ -233,8 +237,8 @@ const TransactionHistory: React.FC = () => {
 										<TableData>
 											<AssetWrapper>
 												<Image
-													src={item.tokenIcon?.url}
-													alt={item.tokenIcon?.alt}
+													src={item.sourceTokenInfo?.icon?.url}
+													alt={item.sourceTokenInfo?.icon?.alt}
 													height={24}
 													width={24}
 												/>
@@ -247,9 +251,9 @@ const TransactionHistory: React.FC = () => {
 														shade="medium"
 														style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
 													>
-														{item.amount}
+														{item.sourceAmount}
 														{' '}
-														{item.tokenName}
+														{item.sourceTokenInfo?.name}
 													</Typography>
 													<Tooltip title={item.sourceTx} placement="bottom">
 														<div onClick={navigateUrl(item.txSourceUrl)} tabIndex={0} role="button">
@@ -295,8 +299,8 @@ const TransactionHistory: React.FC = () => {
 										<TableData>
 											<AssetWrapper>
 												<Image
-													src={item.tokenIcon?.url}
-													alt={item.tokenIcon?.alt}
+													src={item.destinationTokenInfo?.icon?.url}
+													alt={item.destinationTokenInfo?.icon?.alt}
 													height={24}
 													width={24}
 												/>
@@ -309,9 +313,9 @@ const TransactionHistory: React.FC = () => {
 														shade="medium"
 														style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
 													>
-														{item.amount}
+														{item.destinationAmount}
 														{' '}
-														{item.tokenName}
+														{item.destinationTokenInfo.name}
 													</Typography>
 													<Tooltip title={item.destinationTx} placement="bottom">
 														<div onClick={navigateUrl(item.txDestinationUrl)} tabIndex={0} role="button">

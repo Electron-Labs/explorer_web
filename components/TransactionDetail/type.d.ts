@@ -6,15 +6,16 @@ export interface Transaction {
 	sourceTx: string,
 	receiverAddress: string,
 	destinationTx: string,
-	amount: string,
 	sourceChain: string,
 	destinationChain: string,
 	tokenAddressSource: string,
-	tokenIcon: { url: string, alt: string}
-	tokenName: string,
-	destinationTime: string,
+	sourceTokenInfo: { icon: { url: string, alt: string }, name: string },
+	destinationTokenInfo: { icon: { url: string, alt: string }, name: string },
+	sourceAmount: string,
+	destinationAmount: string,
 	txSourceUrl: string,
 	txDestinationUrl: string,
 	senderExplorerUrl: string,
 	receiverExplorerUrl: string,
+	destinationTime: string
 }
