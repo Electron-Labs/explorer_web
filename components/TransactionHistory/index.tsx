@@ -100,8 +100,8 @@ const TransactionHistory: React.FC = () => {
 					destinationAmount: (+formatAmount(item.destinationAmount)).toLocaleString(),
 					txSourceUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/${sourceChain === ChainId.NEAR ? 'transactions' : 'tx'}/${item.sourceTx}`,
 					txDestinationUrl: `${CHAIN_EXPLORER_MAP[destinationChain]}/${destinationChain === ChainId.NEAR ? 'transactions' : 'tx'}/${item.destinationTx}`,
-					senderExplorerUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/address/${item.senderAddress}`,
-					receiverExplorerUrl: `${CHAIN_EXPLORER_MAP[destinationChain]}/address/${item.receiverAddress}`,
+					senderExplorerUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/${sourceChain === ChainId.NEAR ? 'accounts' : 'address'}/${item.senderAddress}`,
+					receiverExplorerUrl: `${CHAIN_EXPLORER_MAP[destinationChain]}/${destinationChain === ChainId.NEAR ? 'accounts' : 'address'}/${item.receiverAddress}`,
 				};
 			});
 			setTransactionList(list);

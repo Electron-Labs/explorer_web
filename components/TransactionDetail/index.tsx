@@ -60,8 +60,8 @@ const TransactionDetail: React.FC = () => {
 					destinationAmount: (+formatAmount(response.data.destinationAmount)).toLocaleString(),
 					txSourceUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/${sourceChain === ChainId.NEAR ? 'transactions' : 'tx'}/${response.data.sourceTx}`,
 					txDestinationUrl: `${CHAIN_EXPLORER_MAP[destinationChain]}/${destinationChain === ChainId.NEAR ? 'transactions' : 'tx'}/${response.data.destinationTx}`,
-					senderExplorerUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/${destinationChain === ChainId.NEAR ? 'address' : 'address'}/${response.data.senderAddress}`,
-					receiverExplorerUrl: `${CHAIN_EXPLORER_MAP[destinationChain]}/${destinationChain === ChainId.NEAR ? 'address' : 'address'}/${response.data.receiverAddress}`,
+					senderExplorerUrl: `${CHAIN_EXPLORER_MAP[sourceChain]}/${destinationChain === ChainId.NEAR ? 'accounts' : 'address'}/${response.data.senderAddress}`,
+					receiverExplorerUrl: `${CHAIN_EXPLORER_MAP[destinationChain]}/${destinationChain === ChainId.NEAR ? 'accounts' : 'address'}/${response.data.receiverAddress}`,
 				});
 				setIsLoading(false);
 			} catch (err) {
