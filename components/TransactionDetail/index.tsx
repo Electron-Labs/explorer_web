@@ -26,9 +26,9 @@ const TransactionDetail: React.FC = () => {
 	const [transactionDetail, setTransactionDetail] = useState<Transaction | null>();
 	const [isLoading, setIsLoading] = useState(false);
 
-	const formatAmount = (amount: string) => new BigNumber(amount.toString()).dividedBy(
+	const formatAmount = (amount: string) => (amount ? new BigNumber(amount.toString()).dividedBy(
 		new BigNumber(10).exponentiatedBy(new BigNumber(6)),
-	).toString();
+	).toString() : 0);
 
 	const getChain = (address: string) => {
 		if (isHexString(address)) {
@@ -47,7 +47,8 @@ const TransactionDetail: React.FC = () => {
 				const sourceTokenInfo = TOKEN_CONTRACTS_ICON_MAP[
 					response.data.tokenAddressSource.toLowerCase()
 				];
-				const destinationTokenInfo = TOKEN_CONTRACTS_ICON_MAP[
+				const destinationTokenInfo = response.data.tokenAddressDestination
+				&& TOKEN_CONTRACTS_ICON_MAP[
 					response.data.tokenAddressDestination.toLowerCase()
 				];
 				setTransactionDetail({
@@ -366,28 +367,34 @@ const TransactionDetail: React.FC = () => {
 								<Typography shade="medium">
 									Asset:
 								</Typography>
-								<AssetWrapper>
-									<Image
-										src={transactionDetail.destinationTokenInfo?.icon?.url}
-										alt={transactionDetail.destinationTokenInfo?.icon?.alt}
-										height={24}
-										width={24}
-									/>
-									<div style={{
-										lineHeight: '18px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden',
-									}}
-									>
-										<Typography
-											type="l5"
-											shade="medium"
-											style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
-										>
-											{transactionDetail.destinationAmount}
-											{' '}
-											{transactionDetail.destinationTokenInfo?.name}
-										</Typography>
-									</div>
-								</AssetWrapper>
+								{
+									transactionDetail.destinationTokenInfo
+										? (
+											<AssetWrapper>
+												<Image
+													src={transactionDetail.destinationTokenInfo?.icon?.url}
+													alt={transactionDetail.destinationTokenInfo?.icon?.alt}
+													height={24}
+													width={24}
+												/>
+												<div style={{
+													lineHeight: '18px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden',
+												}}
+												>
+													<Typography
+														type="l5"
+														shade="medium"
+														style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
+													>
+														{transactionDetail.destinationAmount}
+														{' '}
+														{transactionDetail.destinationTokenInfo?.name}
+													</Typography>
+												</div>
+											</AssetWrapper>
+										)
+										: <div>-</div>
+								}
 								<Typography shade="medium">
 									Transaction Hash:
 								</Typography>

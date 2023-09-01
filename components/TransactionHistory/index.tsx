@@ -74,9 +74,9 @@ const TransactionHistory: React.FC = () => {
 		return ChainId.NEAR;
 	};
 
-	const formatAmount = (amount: string) => new BigNumber(amount.toString()).dividedBy(
+	const formatAmount = (amount: string) => (amount ? new BigNumber(amount.toString()).dividedBy(
 		new BigNumber(10).exponentiatedBy(new BigNumber(6)),
-	).toString();
+	).toString() : 0);
 
 	const fetchData = useCallback(async () => {
 		try {
@@ -87,7 +87,7 @@ const TransactionHistory: React.FC = () => {
 				const sourceChain = getChain(item.senderAddress);
 				const destinationChain = getChain(item.receiverAddress);
 				const sourceTokenInfo = TOKEN_CONTRACTS_ICON_MAP[item.tokenAddressSource.toLowerCase()];
-				const destinationTokenInfo = TOKEN_CONTRACTS_ICON_MAP[
+				const destinationTokenInfo = item.tokenAddressDestination && TOKEN_CONTRACTS_ICON_MAP[
 					item.tokenAddressDestination.toLowerCase()
 				];
 				return {
@@ -297,39 +297,45 @@ const TransactionHistory: React.FC = () => {
 											</div>
 										</TableData>
 										<TableData>
-											<AssetWrapper>
-												<Image
-													src={item.destinationTokenInfo?.icon?.url}
-													alt={item.destinationTokenInfo?.icon?.alt}
-													height={24}
-													width={24}
-												/>
-												<div style={{
-													lineHeight: '18px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden',
-												}}
-												>
-													<Typography
-														type="l5"
-														shade="medium"
-														style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
-													>
-														{item.destinationAmount}
-														{' '}
-														{item.destinationTokenInfo.name}
-													</Typography>
-													<Tooltip title={item.destinationTx} placement="bottom">
-														<div onClick={navigateUrl(item.txDestinationUrl)} tabIndex={0} role="button">
-															<Typography
-																type="l5"
-																shade="medium"
-																style={{ color: theme.text.active }}
+											{
+												item.destinationTx
+													? (
+														<AssetWrapper>
+															<Image
+																src={item.destinationTokenInfo?.icon?.url}
+																alt={item.destinationTokenInfo?.icon?.alt}
+																height={24}
+																width={24}
+															/>
+															<div style={{
+																lineHeight: '18px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden',
+															}}
 															>
-																{formatTransactionHash(item.destinationTx)}
-															</Typography>
-														</div>
-													</Tooltip>
-												</div>
-											</AssetWrapper>
+																<Typography
+																	type="l5"
+																	shade="medium"
+																	style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
+																>
+																	{item.destinationAmount}
+																	{' '}
+																	{item.destinationTokenInfo?.name}
+																</Typography>
+																<Tooltip title={item.destinationTx} placement="bottom">
+																	<div onClick={navigateUrl(item.txDestinationUrl)} tabIndex={0} role="button">
+																		<Typography
+																			type="l5"
+																			shade="medium"
+																			style={{ color: theme.text.active }}
+																		>
+																			{formatTransactionHash(item.destinationTx)}
+																		</Typography>
+																	</div>
+																</Tooltip>
+															</div>
+														</AssetWrapper>
+													)
+													: '-'
+											}
 										</TableData>
 									</TableRow>
 								))
