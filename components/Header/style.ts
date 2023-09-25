@@ -19,3 +19,10 @@ export const SettingWrapper = styled.div`
 	display: flex;
 	align-items: center;
 `;
+
+export const ButtonWrapper = styled.div`
+	display: flex;
+	height: 100%;
+	grid-gap: 24px;
+	align-items: center;
+`;
